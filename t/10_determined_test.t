@@ -6,8 +6,8 @@ BEGIN { plan tests => 13 }
 
 #use LWP::Debug ('+');
 
-use LWP::UserAgent::Determined;
-my $browser = LWP::UserAgent::Determined->new;
+use AnyEvent::HTTP::LWP::UserAgent::Determined;
+my $browser = AnyEvent::HTTP::LWP::UserAgent::Determined->new;
 
 use HTTP::Headers;
 use HTTP::Request;
@@ -38,7 +38,7 @@ sub timings {
 
 ok 1;
 print "# Hello from ", __FILE__, "\n";
-print "# LWP::UserAgent::Determined v$LWP::UserAgent::Determined::VERSION\n";
+print "# AnyEvent::HTTP::LWP::UserAgent::Determined v$AnyEvent::HTTP::LWP::UserAgent::Determined::VERSION\n";
 print "# LWP::UserAgent v$LWP::UserAgent::VERSION\n";
 print "# LWP v$LWP::VERSION\n" if $LWP::VERSION;
 

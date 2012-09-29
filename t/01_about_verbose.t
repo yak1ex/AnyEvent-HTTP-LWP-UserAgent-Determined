@@ -9,7 +9,7 @@ BEGIN {plan tests => 2};
 
 ok 1;
 
-use LWP::UserAgent::Determined;
+use AnyEvent::HTTP::LWP::UserAgent::Determined;
 use LWP::UserAgent;
 use LWP;
 
