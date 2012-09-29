@@ -9,6 +9,7 @@ use      LWP::UserAgent::Determined ();
 use strict;
 
 #==========================================================================
+# extracted from LWP::UserAgent::Determined with little modification
 
 sub simple_request_async {
   my($self, @args) = @_;
@@ -50,6 +51,7 @@ sub simple_request_async {
 }
 
 #--------------------------------------------------------------------------
+# extracted from LWP::UserAgent::Determined
 
 sub new {
   my $self = shift->SUPER::new(@_);
@@ -65,18 +67,21 @@ __END__
 
 =head1 NAME
 
-LWP::UserAgent::Determined - a virtual browser that retries errors
+AnyEvent::HTTP::LWP::UserAgent::Determined - a virtual browser that retries errors with AnyEvent
 
 =head1 SYNOPSIS
 
   use strict;
-  use LWP::UserAgent::Determined;
+  use AnyEvent::HTTP::LWP::UserAgent::Determined;
   my $browser = LWP::UserAgent::Determined->new;
   my $response = $browser->get($url, headers... );
+  $browser->get_async($url, headers... )->cb(sub {
+    my $response = shift->recv;
+  });
 
 =head1 DESCRIPTION
 
-This class works just like L<LWP::UserAgent> (and is based on it, by
+L<LWP::UserAgent::Determined> works just like L<LWP::UserAgent> (and is based on it, by
 being a subclass of it), except that when you use it to get a web page
 but run into a possibly-temporary error (like a DNS lookup timeout),
 it'll wait a few seconds and retry a few times.
@@ -86,122 +91,29 @@ considered retry-worthy and how many times to wait and for how many
 seconds, but normally you needn't bother about these, as the default
 settings are relatively sane.
 
+This class not only works like L<LWP::UserAgent::Determined> but also L<AnyEvent::HTTP::LWP::UserAgent>
+ (and is based on them, by being a subclass of them),
+
 =head1 METHODS
 
-This module inherits all of L<LWP::UserAgent>'s methods,
-and adds the following.
-
-=over
-
-=item $timing_string = $browser->timing();
-
-=item $browser->timing( "10,30,90" )
-
-The C<timing> method gets or sets the string that controls how many
-times it should retry, and how long the pauses should be.
-
-If you specify empty-string, this means not to retry at all.
-
-If you specify a string consisting of a single number, like "10", that
-means that if the first request doesn't succeed, then
-C<< $browser->get(...) >> (or any other method based on C<request>
-or C<simple_request>)
-should wait 10 seconds and try again (and if that fails, then
-it's final).
-
-If you specify a string with several numbers in it (like "10,30,90"),
-then that means C<$browser> can I<re>try as that many times (i.e., one
-initial try, I<plus> a maximum of the three retries, because three numbers
-there), and that it should wait first those numbers of seconds each time.
-So C<< $browser->timing( "10,30,90" ) >> basically means:
-
-  try the request; return it unless it's a temporary-looking error;
-  sleep 10;
-  retry the request; return it unless it's a temporary-looking error;
-  sleep 30;
-  retry the request; return it unless it's a temporary-looking error;
-  sleep 90  the request;
-  return it;
-
-The default value is "1,3,15".
-
-
-
-=item $http_codes_hr = $browser->codes_to_determinate();
-
-This returns the hash that is the set of HTTP codes that merit a retry
-(like 500 and 408, but unlike 404 or 200).  You can delete or add
-entries like so;
-
-  $http_codes_hr = $browser->codes_to_determinate();
-  delete $http_codes_hr->{408};
-  $http_codes_hr->{567} = 1;
-
-(You can actually set a whole new hashset with C<<
-$browser->codes_to_determinate($new_hr) >>, but there's usually no
-benefit to that as opposed to the above.)
-
-The current default is 408 (Timeout) plus some 5xx codes.
-
-
-
-=item $browser->before_determined_callback()
-
-=item $browser->before_determined_callback( \&some_routine );
-
-=item $browser->after_determined_callback()
-
-=item $browser->after_determined_callback( \&some_routine );
-
-These read (first two) or set (second two) callbacks that are
-called before the actual HTTP/FTP/etc request is made.  By default,
-these are set to undef, meaning nothing special is called.  If you
-want to alter try requests, or inspect responses before any retrying
-is considered, you can set up these callbacks.
-
-The arguments passed to these routines are:
-
-=over
-
-=item 0: the current $browser object
-
-=item 1: an arrayref to the list of timing pauses (based on $browser->timing)
-
-=item 2: the duration of the number of seconds we'll pause if this request
-fails this time, or undef if this is the last chance.
-
-=item 3: the value of $browser->codes_to_determinate
-
-=item 4: an arrayref of the arguments we pass to LWP::UserAgent::simple_request
-(the first of which is the request object)
-
-=item (5): And, only for after_determined_callback, the response we
-just got.
-
-=back
-
-Example use:
-
-  $browser->before_determined_callback( sub {
-    print "Trying ", $_[4][0]->uri, " ...\n";
-  });
-
-=back
-
+This module inherits all of L<LWP::UserAgent::Determined>'s methods and 
+L<AnyEvent::HTTP::LWP::UserAgent>'s methods.
 
 =head1 IMPLEMENTATION
 
-This class works by overriding LWP::UserAgent's C<simple_request> method
+This class works by overriding L<AnyEvent::HTTP::LWP::UserAgent>'s C<simple_request> method
 with its own around-method that just loops.  See the source of this
-module; it's straightforward.  Relatively.
+module; it's straightforward with caution of asynchronous nature.
 
 
 =head1 SEE ALSO
 
-L<LWP>, L<LWP::UserAgent>
+L<LWP>, L<LWP::UserAgent>, L<LWP::UserAgent::Determined>, L<AnyEvent::HTTP>, L<AnyEvent::HTTP::LWP::UserAgent>
 
 
 =head1 COPYRIGHT AND DISCLAIMER
+
+Original copyright for LWP::UserAgent::Determined:
 
 Copyright 2004, Sean M. Burke, all rights
 reserved.  This program is free software; you can redistribute it
@@ -213,6 +125,10 @@ merchantability or fitness for a particular purpose.
 
 
 =head1 AUTHOR
+
+Yasutaka ATARASHI <atara-y@mx.scn.tv>
+
+Original authors of LWP::UserAgent::Determined are as follows:
 
 Originally created by Sean M. Burke, C<sburke@cpan.org>
 
