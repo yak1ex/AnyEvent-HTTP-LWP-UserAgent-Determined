@@ -2,46 +2,51 @@
 package AnyEvent::HTTP::LWP::UserAgent::Determined;
 
 $VERSION = '0.01.1.06';
-use      LWP::UserAgent ();
-@ISA = ('LWP::UserAgent');
+use      AnyEvent::HTTP::LWP::UserAgent ();
+use      LWP::UserAgent::Determined ();
+@ISA = ('AnyEvent::HTTP::LWP::UserAgent', 'LWP::UserAgent::Determined');
 
 use strict;
-die "Where's _elem?!!?" unless __PACKAGE__->can('_elem');
-
-sub timing                { shift->_elem('timing' , @_) }
-sub codes_to_determinate  { shift->_elem('codes_to_determinate' , @_) }
-sub before_determined_callback { shift->_elem('before_determined_callback' , @_) }
-sub  after_determined_callback { shift->_elem( 'after_determined_callback' , @_) }
 
 #==========================================================================
 
-sub simple_request {
+sub simple_request_async {
   my($self, @args) = @_;
   my(@timing_tries) = ( $self->timing() =~ m<(\d+(?:\.\d+)*)>g );
   my $determination = $self->codes_to_determinate();
 
-  my $resp;
+  my $cv = AE::cv;
   my $before_c = $self->before_determined_callback;
   my $after_c  = $self->after_determined_callback;
-  foreach my $pause_if_unsuccessful (@timing_tries, undef) {
-    
+  push @timing_tries, undef;
+
+  my $loop;
+  $loop = sub {
+    my $pause_if_unsuccessful = shift @timing_tries;
+
     $before_c and $before_c->(
       $self, \@timing_tries, $pause_if_unsuccessful, $determination, \@args);
-    $resp = $self->SUPER::simple_request(@args);
-    $after_c and $after_c->(
-      $self, \@timing_tries, $pause_if_unsuccessful, $determination, \@args, $resp);
+    $self->SUPER::simple_request_async(@args)->cb(sub {
+      my $resp = shift->recv;
+      $after_c and $after_c->(
+        $self, \@timing_tries, $pause_if_unsuccessful, $determination, \@args, $resp);
 
-    my $code = $resp->code;
-    unless( $determination->{$code} ) { # normal case: all is well (or 404, etc)
-      return $resp;
-    }
-    if(defined $pause_if_unsuccessful) { # it's undef only on the last
+      my $code = $resp->code;
+      unless( $determination->{$code} ) { # normal case: all is well (or 404, etc)
+        $cv->send($resp); return;
+      }
+      if(defined $pause_if_unsuccessful) { # it's undef only on the last
 
-      sleep $pause_if_unsuccessful if $pause_if_unsuccessful;
-    }
-  }
-  
-  return $resp;
+        sleep $pause_if_unsuccessful if $pause_if_unsuccessful;
+        $loop->();
+      } else {
+        $cv->send($resp);
+      }
+    });
+  };
+  $loop->(); # First invoke
+
+  return $cv;
 }
 
 #--------------------------------------------------------------------------
@@ -50,21 +55,6 @@ sub new {
   my $self = shift->SUPER::new(@_);
   $self->_determined_init();
   return $self;
-}
-
-#--------------------------------------------------------------------------
-
-sub _determined_init {
-  my $self = shift;
-  $self->timing( '1,3,15' );
-  $self->codes_to_determinate( { map { $_=>1 }
-   '408', # Request Timeout
-   '500', # Internal Server Error
-   '502', # Bad Gateway
-   '503', # Service Unavailable
-   '504', # Gateway Timeout
-  } );
-  return;
 }
 
 #==========================================================================
