@@ -1,12 +1,13 @@
 
 package AnyEvent::HTTP::LWP::UserAgent::Determined;
 
-$VERSION = '0.01.1.06';
-use      AnyEvent::HTTP::LWP::UserAgent ();
-use      LWP::UserAgent::Determined ();
-@ISA = ('AnyEvent::HTTP::LWP::UserAgent', 'LWP::UserAgent::Determined');
-
 use strict;
+
+our ($VERSION) = 0.01.1.06;
+use      AnyEvent::HTTP::LWP::UserAgent 0.08 ();
+use      LWP::UserAgent::Determined ();
+our (@ISA) = ('AnyEvent::HTTP::LWP::UserAgent', 'LWP::UserAgent::Determined');
+
 
 #==========================================================================
 # extracted from LWP::UserAgent::Determined with little modification
@@ -126,7 +127,7 @@ merchantability or fitness for a particular purpose.
 
 =head1 AUTHOR
 
-Yasutaka ATARASHI <atara-y@mx.scn.tv>
+Yasutaka ATARASHI C<yakex@cpan.org>
 
 Original authors of LWP::UserAgent::Determined are as follows:
 
