@@ -1,4 +1,10 @@
-Revision history for Perl extension LWP::Determined::UserAgent
+Revision history for Perl extension AnyEvent::HTTP::LWP::Determined::UserAgent
+
+2012.10-09 Yasutaka ATARASHI <yakex@cpan.org>
+    * Forked from LWP::Determined::UserAgent 1.06.
+    * Release 0.01.1.06 - First public release.
+
+Original revision history for Perl extension LWP::Determined::UserAgent
 
 2012.05-20 Jesse Vincent <jesse@cpan.org>
 	* Release 1.06
