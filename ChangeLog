@@ -1,6 +1,11 @@
 Revision history for Perl extension AnyEvent::HTTP::LWP::Determined::UserAgent
 
 2012.10-09 Yasutaka ATARASHI <yakex@cpan.org>
+    * Release 0.02.1.06 - Bug fix version.
+    * Fix #1 on github (missing prereq).
+    * Fix improper use of codes_to_determinate in tests. 
+
+2012.10-09 Yasutaka ATARASHI <yakex@cpan.org>
     * Forked from LWP::Determined::UserAgent 1.06.
     * Release 0.01.1.06 - First public release.
 
