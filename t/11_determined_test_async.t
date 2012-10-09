@@ -47,7 +47,7 @@ my @error_codes = qw(408 500 502 503 504);
 ok( @error_codes == keys %{$browser->codes_to_determinate} );
 ok( @error_codes == grep { $browser->codes_to_determinate->{$_} } @error_codes );
 # for unknown host/port, 595 is returned by AnyEvent::HTTP::LWP::UserAgent instead of 500.
-$browser->codes_to_determinate({ 595 => 1 });
+$browser->codes_to_determinate->{595} = 1;
 
 my $cv;
 
