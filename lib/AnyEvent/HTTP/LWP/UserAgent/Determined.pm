@@ -2,6 +2,7 @@
 package AnyEvent::HTTP::LWP::UserAgent::Determined;
 
 use strict;
+use warnings;
 
 # VERSION
 use      AnyEvent::HTTP::LWP::UserAgent 0.08 ();
