@@ -1,6 +1,8 @@
 Revision history for Perl extension AnyEvent::HTTP::LWP::Determined::UserAgent
 
-{{$NEXT}}
+{{$NEXT}} - Next release
+
+2012-10-24 Yasutaka ATARASHI <yakex@cpan.org>
     * Release v0.04.1.06 - Adjust distribution configuration for Kwalitee.
     * Enable DZP::License, DZP::NextRelease, DZP::ReadmeAnyFromPod,
       DZP::MinimumPerl and DZP::Test::Kwalitee::Extra.
