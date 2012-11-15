@@ -2,6 +2,10 @@
 
 AnyEvent::HTTP::LWP::UserAgent::Determined - a virtual browser that retries errors with AnyEvent
 
+# VERSION
+
+version v0.05.1.06
+
 # SYNOPSIS
 
     use strict;
@@ -38,13 +42,9 @@ This class works by overriding [AnyEvent::HTTP::LWP::UserAgent](http://search.cp
 with its own around-method that just loops.  See the source of this
 module; it's straightforward with caution of asynchronous nature.
 
-
-
 # SEE ALSO
 
 [LWP](http://search.cpan.org/perldoc?LWP), [LWP::UserAgent](http://search.cpan.org/perldoc?LWP::UserAgent), [LWP::UserAgent::Determined](http://search.cpan.org/perldoc?LWP::UserAgent::Determined), [AnyEvent::HTTP](http://search.cpan.org/perldoc?AnyEvent::HTTP), [AnyEvent::HTTP::LWP::UserAgent](http://search.cpan.org/perldoc?AnyEvent::HTTP::LWP::UserAgent)
-
-
 
 # COPYRIGHT AND DISCLAIMER
 
@@ -57,8 +57,6 @@ and/or modify it under the same terms as Perl itself.
 This program is distributed in the hope that it will be useful,
 but without any warranty; without even the implied warranty of
 merchantability or fitness for a particular purpose.
-
-
 
 # AUTHOR
 

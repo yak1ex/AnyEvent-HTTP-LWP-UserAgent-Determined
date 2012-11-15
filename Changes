@@ -1,23 +1,26 @@
-Revision history for Perl extension AnyEvent::HTTP::LWP::Determined::UserAgent
+Revision history for {{$dist->name}}
 
-{{$NEXT}} - Next release
+{{$NEXT}}
+    [Non-functional changes]
+        * Use Test::TCP and HTTP::Server::Simple::CGI for network test.
+        * Use DZP::PodWeaver and DZP::Twitter.
 
-2012-10-24 Yasutaka ATARASHI <yakex@cpan.org>
+v0.04.1.06 2012-10-24
     * Release v0.04.1.06 - Adjust distribution configuration for Kwalitee.
     * Enable DZP::License, DZP::NextRelease, DZP::ReadmeAnyFromPod,
       DZP::MinimumPerl and DZP::Test::Kwalitee::Extra.
     * Add use warnings.
 
-2012.10-09 Yasutaka ATARASHI <yakex@cpan.org>
+v0.03.1.06 2012-10-09
     * Release v0.03.1.06 - Fix missing version bump.
     * Add Dist::Zilla plugins to avoid missing version bump.
 
-2012.10-09 Yasutaka ATARASHI <yakex@cpan.org>
+0.02.1.06 2012-10-09
     * Release 0.02.1.06 - Bug fix version.
     * Fix #1 on github (missing prereq).
     * Fix improper use of codes_to_determinate in tests. 
 
-2012.10-09 Yasutaka ATARASHI <yakex@cpan.org>
+0.01.1.06 2012.10-09
     * Forked from LWP::Determined::UserAgent 1.06.
     * Release 0.01.1.06 - First public release.
 
