@@ -4,6 +4,7 @@ package AnyEvent::HTTP::LWP::UserAgent::Determined;
 use strict;
 use warnings;
 
+# ABSTRACT: a virtual browser that retries errors with AnyEvent
 # VERSION
 use      AnyEvent::HTTP::LWP::UserAgent 0.08 ();
 use      LWP::UserAgent::Determined ();
@@ -66,11 +67,6 @@ sub new {
 1;
 __END__
 
-
-=head1 NAME
-
-AnyEvent::HTTP::LWP::UserAgent::Determined - a virtual browser that retries errors with AnyEvent
-
 =head1 SYNOPSIS
 
   use strict;
@@ -107,11 +103,9 @@ This class works by overriding L<AnyEvent::HTTP::LWP::UserAgent>'s C<simple_requ
 with its own around-method that just loops.  See the source of this
 module; it's straightforward with caution of asynchronous nature.
 
-
 =head1 SEE ALSO
 
 L<LWP>, L<LWP::UserAgent>, L<LWP::UserAgent::Determined>, L<AnyEvent::HTTP>, L<AnyEvent::HTTP::LWP::UserAgent>
-
 
 =head1 COPYRIGHT AND DISCLAIMER
 
@@ -125,7 +119,6 @@ This program is distributed in the hope that it will be useful,
 but without any warranty; without even the implied warranty of
 merchantability or fitness for a particular purpose.
 
-
 =head1 AUTHOR
 
 Yasutaka ATARASHI C<yakex@cpan.org>
@@ -135,6 +128,3 @@ Original authors of LWP::UserAgent::Determined are as follows:
 Originally created by Sean M. Burke, C<sburke@cpan.org>
 
 Currently maintained by Jesse Vincent C<jesse@fsck.com>
-
-=cut
-
