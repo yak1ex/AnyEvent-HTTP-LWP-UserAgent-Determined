@@ -18,7 +18,7 @@ version v0.05.1.06
 
 # DESCRIPTION
 
-[LWP::UserAgent::Determined](http://search.cpan.org/perldoc?LWP::UserAgent::Determined) works just like [LWP::UserAgent](http://search.cpan.org/perldoc?LWP::UserAgent) (and is based on it, by
+[LWP::UserAgent::Determined](https://metacpan.org/pod/LWP::UserAgent::Determined) works just like [LWP::UserAgent](https://metacpan.org/pod/LWP::UserAgent) (and is based on it, by
 being a subclass of it), except that when you use it to get a web page
 but run into a possibly-temporary error (like a DNS lookup timeout),
 it'll wait a few seconds and retry a few times.
@@ -28,23 +28,23 @@ considered retry-worthy and how many times to wait and for how many
 seconds, but normally you needn't bother about these, as the default
 settings are relatively sane.
 
-This class not only works like [LWP::UserAgent::Determined](http://search.cpan.org/perldoc?LWP::UserAgent::Determined) but also [AnyEvent::HTTP::LWP::UserAgent](http://search.cpan.org/perldoc?AnyEvent::HTTP::LWP::UserAgent)
+This class not only works like [LWP::UserAgent::Determined](https://metacpan.org/pod/LWP::UserAgent::Determined) but also [AnyEvent::HTTP::LWP::UserAgent](https://metacpan.org/pod/AnyEvent::HTTP::LWP::UserAgent)
  (and is based on them, by being a subclass of them),
 
 # METHODS
 
-This module inherits all of [LWP::UserAgent::Determined](http://search.cpan.org/perldoc?LWP::UserAgent::Determined)'s methods and 
-[AnyEvent::HTTP::LWP::UserAgent](http://search.cpan.org/perldoc?AnyEvent::HTTP::LWP::UserAgent)'s methods.
+This module inherits all of [LWP::UserAgent::Determined](https://metacpan.org/pod/LWP::UserAgent::Determined)'s methods and 
+[AnyEvent::HTTP::LWP::UserAgent](https://metacpan.org/pod/AnyEvent::HTTP::LWP::UserAgent)'s methods.
 
 # IMPLEMENTATION
 
-This class works by overriding [AnyEvent::HTTP::LWP::UserAgent](http://search.cpan.org/perldoc?AnyEvent::HTTP::LWP::UserAgent)'s `simple_request` method
+This class works by overriding [AnyEvent::HTTP::LWP::UserAgent](https://metacpan.org/pod/AnyEvent::HTTP::LWP::UserAgent)'s `simple_request` method
 with its own around-method that just loops.  See the source of this
 module; it's straightforward with caution of asynchronous nature.
 
 # SEE ALSO
 
-[LWP](http://search.cpan.org/perldoc?LWP), [LWP::UserAgent](http://search.cpan.org/perldoc?LWP::UserAgent), [LWP::UserAgent::Determined](http://search.cpan.org/perldoc?LWP::UserAgent::Determined), [AnyEvent::HTTP](http://search.cpan.org/perldoc?AnyEvent::HTTP), [AnyEvent::HTTP::LWP::UserAgent](http://search.cpan.org/perldoc?AnyEvent::HTTP::LWP::UserAgent)
+[LWP](https://metacpan.org/pod/LWP), [LWP::UserAgent](https://metacpan.org/pod/LWP::UserAgent), [LWP::UserAgent::Determined](https://metacpan.org/pod/LWP::UserAgent::Determined), [AnyEvent::HTTP](https://metacpan.org/pod/AnyEvent::HTTP), [AnyEvent::HTTP::LWP::UserAgent](https://metacpan.org/pod/AnyEvent::HTTP::LWP::UserAgent)
 
 # COPYRIGHT AND DISCLAIMER
 
